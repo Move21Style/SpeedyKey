@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 
 		// setup main frame
-		setTitle("Flexi Type");
+		setTitle("Speedy Key");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout(5, 5));
