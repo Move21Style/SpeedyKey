@@ -25,22 +25,10 @@ public class InputPanel extends JPanel implements Observer {
 
 		add(textField, BorderLayout.CENTER);
 
-		addGaps();
-	}
-
-	/**
-	 * Pseudo solution to get a gap to left and right side
-	 */
-	private void addGaps() {
-		JPanel gap1 = new JPanel();
-		gap1.setPreferredSize(new Dimension(10, (int) textField.getPreferredSize().getHeight()));
-		add(gap1, BorderLayout.WEST);
-		JPanel gap2 = new JPanel();
-		gap2.setPreferredSize(new Dimension(10, (int) textField.getPreferredSize().getHeight()));
-		add(gap2, BorderLayout.EAST);
-		JPanel gap3 = new JPanel();
-		gap3.setPreferredSize(new Dimension((int) textField.getPreferredSize().getWidth(), 2));
-		add(gap3, BorderLayout.SOUTH);
+		// Pseudo solution to get a gap to left and right side
+		add(new SpeedyGaps(10, 0), BorderLayout.WEST);
+		add(new SpeedyGaps(10, 0), BorderLayout.EAST);
+		add(new SpeedyGaps(0, 2), BorderLayout.SOUTH);
 	}
 
 	@Override
