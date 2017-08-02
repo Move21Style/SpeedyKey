@@ -23,7 +23,6 @@ public class FileUtilTest {
 			Assert.assertTrue("Empty word entry <" + words.indexOf(word) + ">",
 					word != null && word.trim().length() > 0);
 		}
-		System.out.println(words.size());
 	}
 
 }
