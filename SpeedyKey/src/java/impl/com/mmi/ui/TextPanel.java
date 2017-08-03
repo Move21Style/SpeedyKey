@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.mmi.model.Model;
-import com.mmi.model.SpeedyLabel;
 
 /**
  * Contains the text to type

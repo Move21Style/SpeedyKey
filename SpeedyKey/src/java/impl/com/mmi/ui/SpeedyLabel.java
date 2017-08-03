@@ -2,7 +2,7 @@
  * 
  * @author Move21Style<move21style@googlemail.com>
  */
-package com.mmi.model;
+package com.mmi.ui;
 
 import java.awt.Color;
 import java.awt.Font;
