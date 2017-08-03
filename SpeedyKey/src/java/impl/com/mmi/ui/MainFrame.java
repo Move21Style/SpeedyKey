@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 		connectModelToObserver(textPanel);
 
 		JScrollPane scrollPane = new JScrollPane(textPanel);
-		scrollPane.setPreferredSize(new Dimension(600, 400));
+		scrollPane.setPreferredSize(new Dimension(600, 410));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);

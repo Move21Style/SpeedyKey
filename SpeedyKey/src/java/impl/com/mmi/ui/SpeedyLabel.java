@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 /**
+ * Holds the corresponding word and flags like active or correct.
  * 
  * @author Move21Style<move21style@googlemail.com>
  */
@@ -31,6 +32,7 @@ public class SpeedyLabel extends JLabel {
 
 		setText(this.word);
 		setBackground(Color.LIGHT_GRAY);
+
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setFont(new Font("Arial", Font.PLAIN, 20));
 	}
