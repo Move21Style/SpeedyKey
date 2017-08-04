@@ -32,7 +32,6 @@ public class TextPanel extends JPanel implements Observer {
 
 	public TextPanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, HGAP, VGAP)); // align, hgap, vgap
-		setPreferredSize(new Dimension(480, 580));
 		setBorder(BorderFactory.createLineBorder(Color.RED));
 	}
 
@@ -67,7 +66,8 @@ public class TextPanel extends JPanel implements Observer {
 	/**
 	 * Need to override to make resizing of the scroll panel possible.<br>
 	 * The width is taken from parent - {@link #HGAP}.<br>
-	 * The height is taken by last component's location + it's height + {@link #VGAP}.
+	 * The height is taken by last component's location + it's height +
+	 * {@link #VGAP}.
 	 * 
 	 * @see javax.swing.JComponent#getPreferredSize()
 	 */

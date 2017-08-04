@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 		connectModelToObserver(textPanel);
 
 		JScrollPane scrollPane = new JScrollPane(textPanel);
-		scrollPane.setPreferredSize(new Dimension(600, 410));
+		scrollPane.setPreferredSize(new Dimension(800, 600));
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -63,7 +63,8 @@ public class MainFrame extends JFrame {
 	/**
 	 * Connect observing component to model
 	 * 
-	 * @param observer - the observer
+	 * @param observer
+	 *            - the observer
 	 */
 	private void connectModelToObserver(Observer observer) {
 		model.addObserver(observer);
