@@ -1,5 +1,7 @@
 package com.mmi.ui;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,7 +16,9 @@ public class RunningInfo extends JPanel implements Observer {
 	private static final long serialVersionUID = 6705154309510264244L;
 
 	public RunningInfo() {
-		// TODO mmi
+		// TODO mmi: Dummy
+		setLayout(new GridLayout(1, 5));
+		setPreferredSize(new Dimension(100, 0));
 	}
 
 	@Override
