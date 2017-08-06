@@ -53,9 +53,12 @@ public class TextPanel extends JPanel implements Observer {
 					add(speedyLabel);
 				}
 
+				// Re-layout view
+				validate();
+
 				// Set scroll bar unit increment
+				JScrollPane scrollPane = (JScrollPane) getParent().getParent();
 				if (labelSize != null) {
-					JScrollPane scrollPane = (JScrollPane) getParent().getParent();
 					JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 					verticalScrollBar.setUnitIncrement(labelSize.height + VGAP); // 26
 				}
@@ -66,8 +69,7 @@ public class TextPanel extends JPanel implements Observer {
 	/**
 	 * Need to override to make resizing of the scroll panel possible.<br>
 	 * The width is taken from parent - {@link #HGAP}.<br>
-	 * The height is taken by last component's location + it's height +
-	 * {@link #VGAP}.
+	 * The height is taken by last component's location + it's height + {@link #VGAP}.
 	 * 
 	 * @see javax.swing.JComponent#getPreferredSize()
 	 */
