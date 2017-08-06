@@ -14,7 +14,6 @@ import com.mmi.util.FileUtil;
  */
 public class Model extends Observable {
 	private static Random RANDOM = new Random();
-	private List<String> words;
 	private ModelUpdateType modelUpdateType;
 	private List<SpeedyWord> speedyWords = new ArrayList<>();
 
@@ -22,8 +21,8 @@ public class Model extends Observable {
 		// Get words
 		List<String> availableTxtFiles = FileUtil.getAvailableTxtFiles();
 		String fileName = availableTxtFiles.get(RANDOM.nextInt(availableTxtFiles.size()));
-		words = FileUtil.readWords(fileName);
-		buildSpeedyLabel();
+		List<String> words = FileUtil.readWords(fileName);
+		buildSpeedyLabel(words);
 
 		this.modelUpdateType = ModelUpdateType.ALL;
 		System.out.println("Model initialized");
@@ -33,19 +32,12 @@ public class Model extends Observable {
 	/**
 	 * 
 	 */
-	private void buildSpeedyLabel() {
-		if (words != null) {
+	private void buildSpeedyLabel(List<String> words) {
+		if (speedyWords.isEmpty()) {
 			for (int index = 0; index < words.size(); index++) {
 				speedyWords.add(new SpeedyWord(index, words.get(index)));
 			}
 		}
-	}
-
-	/**
-	 * @return the words
-	 */
-	public List<String> getWords() {
-		return words;
 	}
 
 	/**
