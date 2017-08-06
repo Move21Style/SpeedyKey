@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
-import com.mmi.ui.SpeedyLabel;
 import com.mmi.util.FileUtil;
 
 /**
@@ -17,7 +16,7 @@ public class Model extends Observable {
 	private static Random RANDOM = new Random();
 	private List<String> words;
 	private ModelUpdateType modelUpdateType;
-	private List<SpeedyLabel> speedyLabels = new ArrayList<>();
+	private List<SpeedyWord> speedyWords = new ArrayList<>();
 
 	public void init() {
 		// Get words
@@ -36,8 +35,8 @@ public class Model extends Observable {
 	 */
 	private void buildSpeedyLabel() {
 		if (words != null) {
-			for (String word : words) {
-				speedyLabels.add(new SpeedyLabel(word));
+			for (int index = 0; index < words.size(); index++) {
+				speedyWords.add(new SpeedyWord(index, words.get(index)));
 			}
 		}
 	}
@@ -59,8 +58,8 @@ public class Model extends Observable {
 	/**
 	 * @return the speedyLabels
 	 */
-	public List<SpeedyLabel> getSpeedyLabels() {
-		return speedyLabels;
+	public List<SpeedyWord> getSpeedyWords() {
+		return speedyWords;
 	}
 
 	/**

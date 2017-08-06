@@ -7,6 +7,7 @@ package com.mmi.ui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -19,15 +20,15 @@ public class SpeedyLabel extends JLabel {
 	private static final long serialVersionUID = 7312242393176945810L;
 
 	private String word;
-	boolean active;
-	boolean correct;
+	private int index;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param word
 	 */
-	public SpeedyLabel(String word) {
+	public SpeedyLabel(int index, String word) {
+		this.index = index;
 		this.word = word;
 
 		setText(this.word);
@@ -35,34 +36,8 @@ public class SpeedyLabel extends JLabel {
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setFont(new Font("Arial", Font.PLAIN, 20));
-	}
 
-	/**
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	/**
-	 * @return the correct
-	 */
-	public boolean isCorrect() {
-		return correct;
-	}
-
-	/**
-	 * @param correct the correct to set
-	 */
-	public void setCorrect(boolean correct) {
-		this.correct = correct;
+		setBorder(BorderFactory.createLineBorder(Color.BLUE));
 	}
 
 	/**
@@ -70,5 +45,12 @@ public class SpeedyLabel extends JLabel {
 	 */
 	public String getWord() {
 		return word;
+	}
+
+	/**
+	 * @return the index
+	 */
+	public int getIndex() {
+		return index;
 	}
 }

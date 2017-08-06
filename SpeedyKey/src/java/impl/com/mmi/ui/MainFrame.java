@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -4645928022756303009L;
 
 	private Model model;
+	private InputField inputField;
 
 	public MainFrame(Model model) {
 		this.model = model;
@@ -23,19 +25,27 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout(0, 10));
 
-		// setup model
-
 		// Create panels
 		createCenterPanel();
 		createRightPanel();
-		createBottomPanel();
-
+		inputField = createBottomPanel();
 	}
 
-	private void createBottomPanel() {
-		InputPanel inputPanel = new InputPanel();
-		getContentPane().add(inputPanel, BorderLayout.SOUTH);
-		connectModelToObserver(inputPanel);
+	private InputField createBottomPanel() {
+		// Pseudo solution
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.add(new SpeedyGaps(10, 0), BorderLayout.WEST);
+		panel.add(new SpeedyGaps(10, 0), BorderLayout.EAST);
+		panel.add(new SpeedyGaps(0, 10), BorderLayout.SOUTH);
+
+		// The text field
+		InputField inputField = new InputField();
+		connectModelToObserver(inputField);
+
+		panel.add(inputField, BorderLayout.CENTER);
+		getContentPane().add(panel, BorderLayout.SOUTH);
+		return inputField;
 	}
 
 	private void createRightPanel() {
@@ -61,10 +71,16 @@ public class MainFrame extends JFrame {
 	}
 
 	/**
+	 * @return the inputField
+	 */
+	public InputField getInputField() {
+		return inputField;
+	}
+
+	/**
 	 * Connect observing component to model
 	 * 
-	 * @param observer
-	 *            - the observer
+	 * @param observer - the observer
 	 */
 	private void connectModelToObserver(Observer observer) {
 		model.addObserver(observer);

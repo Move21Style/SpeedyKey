@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 import com.mmi.model.Model;
+import com.mmi.model.SpeedyWord;
 
 /**
  * Contains the text to type
@@ -26,7 +28,7 @@ import com.mmi.model.Model;
 public class TextPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = -1779431939119342773L;
 
-	private List<SpeedyLabel> speedyLabels;
+	private List<SpeedyLabel> speedyLabels = new ArrayList<>();
 	private final int VGAP = 5;
 	private final int HGAP = VGAP * 2;
 
@@ -44,13 +46,14 @@ public class TextPanel extends JPanel implements Observer {
 				// Calculate and add labels
 				Dimension labelSize = null;
 				BasicLabelUI basicLabelUI = new BasicLabelUI();
-				speedyLabels = model.getSpeedyLabels();
-				for (SpeedyLabel speedyLabel : speedyLabels) {
-					speedyLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+				List<SpeedyWord> speedyWords = model.getSpeedyWords();
+				for (SpeedyWord speedyWord : speedyWords) {
+					SpeedyLabel speedyLabel = new SpeedyLabel(speedyWord.getIndex(), speedyWord.getWord());
 					labelSize = basicLabelUI.getPreferredSize(speedyLabel);
 					speedyLabel.setPreferredSize(new Dimension(labelSize.width + VGAP, labelSize.height));
 					speedyLabel.validate();
 					add(speedyLabel);
+					speedyLabels.add(speedyLabel);
 				}
 
 				// Re-layout view
