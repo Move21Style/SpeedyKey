@@ -1,11 +1,10 @@
 package com.mmi;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.SwingUtilities;
 
+import com.mmi.listener.SpeedyKeyListener;
 import com.mmi.model.Model;
 import com.mmi.ui.MainFrame;
 
@@ -16,7 +15,7 @@ public class Main {
 		Model model = new Model();
 		MainFrame mainFrame = new MainFrame(model);
 
-		registerKeyListeners(mainFrame, model);
+		registerKeyListener(mainFrame, model);
 
 		SwingUtilities.invokeLater(() -> {
 			mainFrame.start();
@@ -29,29 +28,22 @@ public class Main {
 	/**
 	 * Register {@link KeyListener}s
 	 * 
-	 * @param mainFrame - the main frame view
-	 * @param model - the model
+	 * @param mainFrame
+	 *            - the main frame view
+	 * @param model
+	 *            - the model
 	 */
-	private static void registerKeyListeners(MainFrame mainFrame, Model model) {
+	private static void registerKeyListener(MainFrame mainFrame, Model model) {
 		// // Focus input field
-		//		SwingUtilities.invokeLater(() -> {
-		//			mainFrame.addWindowFocusListener(new WindowAdapter() {
-		//				public void windowGainedFocus(WindowEvent e) {
-		//					mainFrame.getInputField().requestFocusInWindow();
-		//				}
-		//			});
-		//		});
+		// SwingUtilities.invokeLater(() -> {
+		// mainFrame.addWindowFocusListener(new WindowAdapter() {
+		// public void windowGainedFocus(WindowEvent e) {
+		// mainFrame.getInputField().requestFocusInWindow();
+		// }
+		// });
+		// });
 
-		mainFrame.getInputField().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				char keyChar = e.getKeyChar();
-				int modifiersEx = e.getModifiersEx();
-				System.out.println(
-						"Input: " + "keyCode=" + keyCode + ", keyChar=" + keyChar + ", modifiersEx=" + modifiersEx);
-			}
-		});
+		mainFrame.getInputField().addKeyListener(new SpeedyKeyListener(model));
 	}
 
 }
