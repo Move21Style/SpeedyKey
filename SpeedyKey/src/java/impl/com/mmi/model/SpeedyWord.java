@@ -16,7 +16,7 @@ public class SpeedyWord {
 	private String word;
 	int index;
 
-	private String input;
+	private String input = new String();
 
 	boolean active = false;
 	boolean correct = true;
@@ -40,25 +40,22 @@ public class SpeedyWord {
 	 */
 	public boolean isTurnRed() {
 		// typing started && input does not match word
-		return input != null && !word.startsWith(input);
+		return !input.isEmpty() && !word.startsWith(input);
 	}
 
 	/**
 	 * @return <code>true</code> if input matches 100% the word
 	 */
 	public boolean isTurnGreen() {
-		return input != null && input.equals(word);
+		return !input.isEmpty() && input.equals(word);
 	}
 
 	public void appendInput(char c) {
-		if (input == null) {
-			input = new String();
-		}
-
 		input += Character.toString(c);
+		updateColor();
 	}
 
-	public boolean isStartingCahracter(char c) {
+	public boolean isStartingCharacter(char c) {
 		return word.startsWith(Character.toString(c));
 	}
 
@@ -84,7 +81,7 @@ public class SpeedyWord {
 		this.active = true;
 	}
 
-	public void updateColor() {
+	private void updateColor() {
 		if (isTurnGreen()) {
 			color = Color.GREEN;
 		} else if (isTurnRed()) {
@@ -95,9 +92,8 @@ public class SpeedyWord {
 	}
 
 	public void removeLastChar() {
-		if (input != null) {
-			int endIndex = input.length() == 0 ? 0 : input.length() - 1;
-			input = input.substring(0, endIndex);
-		}
+		int endIndex = input.length() == 0 ? 0 : input.length() - 1;
+		input = input.substring(0, endIndex);
+		updateColor();
 	}
 }

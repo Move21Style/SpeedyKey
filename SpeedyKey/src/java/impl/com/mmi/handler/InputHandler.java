@@ -50,7 +50,6 @@ public class InputHandler {
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (c == KeyEvent.VK_SPACE) {
 			System.out.println("KeyEvent.VK_SPACE");
-			speedyWord.updateColor();
 			model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			if (speedyWord.isTurnGreen()) {
 				model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
@@ -63,7 +62,6 @@ public class InputHandler {
 		if (c == KeyEvent.VK_BACK_SPACE) {
 			System.out.println("KeyEvent.VK_BACK_SPACE");
 			speedyWord.removeLastChar();
-			speedyWord.updateColor();
 			model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 		}
 	}
@@ -71,7 +69,7 @@ public class InputHandler {
 	private void startIfPossible(char input) {
 		if (model.status != Status.RUNNING) {
 			SpeedyWord firstSpeedyWord = model.getSpeedyWords().get(0);
-			if (firstSpeedyWord.isStartingCahracter(input)) {
+			if (firstSpeedyWord.isStartingCharacter(input)) {
 				firstSpeedyWord.setActive();
 				model.status = Status.START;
 			} else {
