@@ -60,7 +60,7 @@ public class TextPanel extends JPanel implements Observer {
 				for (SpeedyWord speedyWord : speedyWords) {
 					SpeedyLabel speedyLabel = new SpeedyLabel(speedyWord.getIndex(), speedyWord.getWord());
 					labelSize = basicLabelUI.getPreferredSize(speedyLabel);
-					speedyLabel.setPreferredSize(new Dimension(labelSize.width + VGAP, labelSize.height));
+					speedyLabel.setPreferredSize(new Dimension(labelSize.width, labelSize.height));
 					speedyLabel.validate();
 					add(speedyLabel);
 					speedyLabels.add(speedyLabel);
@@ -78,10 +78,12 @@ public class TextPanel extends JPanel implements Observer {
 			});
 		} else if (model.textPanelAction == TextPanelAction.UPDATE_COLOR) {
 			for (SpeedyWord speedyWord : model.getSpeedyWords()) {
-				SwingUtilities.invokeLater(() -> speedyLabels.get(speedyWord.getIndex()).setBackground(speedyWord.getColor()));
+				SwingUtilities.invokeLater(
+						() -> speedyLabels.get(speedyWord.getIndex()).setBackground(speedyWord.getColor()));
 			}
 		} else {
-			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action [" + model.textPanelAction.name() + "]");
+			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action ["
+					+ model.textPanelAction.name() + "]");
 		}
 	}
 

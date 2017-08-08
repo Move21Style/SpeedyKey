@@ -19,8 +19,7 @@ public class InputHandler {
 	/**
 	 * The Constructor
 	 * 
-	 * @param model
-	 *            - the GUI model
+	 * @param model - the GUI model
 	 */
 	public InputHandler(Model model) {
 		this.model = model;
@@ -29,8 +28,7 @@ public class InputHandler {
 	/**
 	 * Handles the key event.
 	 * 
-	 * @param event
-	 *            - the key event the user triggered by keyboard
+	 * @param event - the key event the user triggered by keyboard
 	 */
 	public void handle(KeyEvent event) {
 		char c = event.getKeyChar();
@@ -54,10 +52,11 @@ public class InputHandler {
 			if (!specialKeyEvent) {
 				// TODO mmi:
 				speedyWord.appendInput(c);
-				model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			}
 		}
 
+		model.textPanelAction = TextPanelAction.UPDATE_COLOR;
+		model.inputFieldAction = InputFieldAction.UPDATE_COLOR;
 		this.specialKeyEvent = false;
 	}
 
