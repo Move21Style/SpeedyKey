@@ -24,7 +24,7 @@ public class Model extends Observable {
 	}
 
 	public enum Status {
-		NONE, START, RUNNING, FINISHED;
+		NONE, RUNNING, FINISHED;
 	}
 
 	private static Random RANDOM = new Random();
@@ -79,7 +79,6 @@ public class Model extends Observable {
 	 * Change the observable status and notify all observers.
 	 */
 	private void changeAndNotify() {
-		System.out.println("Notify Observers...");
 		setChanged();
 		notifyObservers();
 	}

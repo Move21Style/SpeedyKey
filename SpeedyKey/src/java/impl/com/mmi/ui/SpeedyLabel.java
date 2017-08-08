@@ -32,7 +32,8 @@ public class SpeedyLabel extends JLabel {
 		this.word = word;
 
 		setText(this.word);
-		setBackground(Color.LIGHT_GRAY);
+		setBackground(null);
+		setOpaque(true);
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setFont(new Font("Arial", Font.PLAIN, 20));

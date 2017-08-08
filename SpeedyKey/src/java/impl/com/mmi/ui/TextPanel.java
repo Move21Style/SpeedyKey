@@ -76,9 +76,12 @@ public class TextPanel extends JPanel implements Observer {
 					verticalScrollBar.setUnitIncrement(labelSize.height + VGAP); // 26
 				}
 			});
+		} else if (model.textPanelAction == TextPanelAction.UPDATE_COLOR) {
+			for (SpeedyWord speedyWord : model.getSpeedyWords()) {
+				SwingUtilities.invokeLater(() -> speedyLabels.get(speedyWord.getIndex()).setBackground(speedyWord.getColor()));
+			}
 		} else {
-			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action ["
-					+ model.textPanelAction.name() + "]");
+			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action [" + model.textPanelAction.name() + "]");
 		}
 	}
 

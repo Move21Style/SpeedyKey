@@ -10,12 +10,28 @@ import com.mmi.model.SpeedyWord;
 
 public class InputHandler {
 
+	/** The GUI model */
 	private Model model;
 
+	/** A marker to be set if user pressed a special key - i.e. whitespace or backspace */
+	private boolean specialKeyEvent;
+
+	/**
+	 * The Constructor
+	 * 
+	 * @param model
+	 *            - the GUI model
+	 */
 	public InputHandler(Model model) {
 		this.model = model;
 	}
 
+	/**
+	 * Handles the key event.
+	 * 
+	 * @param event
+	 *            - the key event the user triggered by keyboard
+	 */
 	public void handle(KeyEvent event) {
 		char c = event.getKeyChar();
 
@@ -27,11 +43,6 @@ public class InputHandler {
 
 		startIfPossible(c);
 
-		if (model.status == Status.START) {
-			System.out.println("Detected start!");
-			model.status = Status.RUNNING;
-		}
-
 		if (model.status == Status.RUNNING) {
 			// backspace ?
 			handleBackSpace(c);
@@ -39,20 +50,27 @@ public class InputHandler {
 			// whitespace ?
 			handleWhitespace(c);
 
-			// all other cases -> Appending
-			if (c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_SPACE) {
+			// all normal typing cases -> Appending
+			if (!specialKeyEvent) {
 				// TODO mmi:
+				speedyWord.appendInput(c);
+				model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			}
 		}
+
+		this.specialKeyEvent = false;
 	}
 
 	private void handleWhitespace(char c) {
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (c == KeyEvent.VK_SPACE) {
+			this.specialKeyEvent = true;
 			System.out.println("KeyEvent.VK_SPACE");
-			model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			if (speedyWord.isTurnGreen()) {
 				model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
+			} else {
+				speedyWord.appendInput(c);
+				model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			}
 		}
 	}
@@ -60,6 +78,7 @@ public class InputHandler {
 	private void handleBackSpace(char c) {
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (c == KeyEvent.VK_BACK_SPACE) {
+			this.specialKeyEvent = true;
 			System.out.println("KeyEvent.VK_BACK_SPACE");
 			speedyWord.removeLastChar();
 			model.textPanelAction = TextPanelAction.UPDATE_COLOR;
@@ -70,8 +89,8 @@ public class InputHandler {
 		if (model.status != Status.RUNNING) {
 			SpeedyWord firstSpeedyWord = model.getSpeedyWords().get(0);
 			if (firstSpeedyWord.isStartingCharacter(input)) {
-				firstSpeedyWord.setActive();
-				model.status = Status.START;
+				System.out.println("Detected start!");
+				model.status = Status.RUNNING;
 			} else {
 				model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
 			}

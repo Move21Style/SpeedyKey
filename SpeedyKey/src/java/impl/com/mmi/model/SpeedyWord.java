@@ -4,25 +4,21 @@
  */
 package com.mmi.model;
 
+import java.awt.Color;
+
 /**
  * 
  * @author Move21Style<move21style@googlemail.com>
  */
 public class SpeedyWord {
-	public enum Color {
-		GREEN, RED, NONE;
-	}
-
 	private String word;
 	int index;
 
 	private String input = new String();
 
-	boolean active = false;
-	boolean correct = true;
 	boolean complete = false;
 
-	Color color = Color.NONE;
+	public Color color = null;
 
 	/**
 	 * Constructor
@@ -77,18 +73,18 @@ public class SpeedyWord {
 		return this.complete;
 	}
 
-	public void setActive() {
-		this.active = true;
-	}
-
 	private void updateColor() {
 		if (isTurnGreen()) {
 			color = Color.GREEN;
 		} else if (isTurnRed()) {
 			color = Color.RED;
 		} else {
-			color = Color.NONE;
+			color = null;
 		}
+	}
+
+	public Color getColor() {
+		return this.color;
 	}
 
 	public void removeLastChar() {
