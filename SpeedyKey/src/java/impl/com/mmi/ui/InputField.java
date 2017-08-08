@@ -5,6 +5,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+import com.mmi.model.Model;
+import com.mmi.model.Model.InputFieldAction;
 
 public class InputField extends JTextField implements Observer {
 	private static final long serialVersionUID = 7901869482740404063L;
@@ -17,7 +21,24 @@ public class InputField extends JTextField implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// Model model = (Model) arg0;
-		System.out.println("Update input panel");
+		Model model = (Model) arg0;
+
+		if (model.inputFieldAction == InputFieldAction.NONE) {
+			return;
+		}
+
+		if (model.inputFieldAction == InputFieldAction.CLEAR_INPUTFIELD) {
+			// reset
+			model.inputFieldAction = InputFieldAction.NONE;
+			System.out.println(getClass().getSimpleName() + " - clear text field");
+
+			SwingUtilities.invokeLater(() -> {
+				setText("");
+				setCaretPosition(0);
+			});
+		} else {
+			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action ["
+					+ model.inputFieldAction.name() + "]");
+		}
 	}
 }

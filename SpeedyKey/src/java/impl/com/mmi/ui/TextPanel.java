@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicLabelUI;
 
 import com.mmi.model.Model;
+import com.mmi.model.Model.TextPanelAction;
 import com.mmi.model.SpeedyWord;
 
 /**
@@ -40,39 +41,51 @@ public class TextPanel extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
-		System.out.println("Trigger TextPanel");
-		SwingUtilities.invokeLater(() -> {
 
-			// Calculate and add labels
-			Dimension labelSize = null;
-			BasicLabelUI basicLabelUI = new BasicLabelUI();
-			List<SpeedyWord> speedyWords = model.getSpeedyWords();
-			for (SpeedyWord speedyWord : speedyWords) {
-				SpeedyLabel speedyLabel = new SpeedyLabel(speedyWord.getIndex(), speedyWord.getWord());
-				labelSize = basicLabelUI.getPreferredSize(speedyLabel);
-				speedyLabel.setPreferredSize(new Dimension(labelSize.width + VGAP, labelSize.height));
-				speedyLabel.validate();
-				add(speedyLabel);
-				speedyLabels.add(speedyLabel);
-			}
+		if (model.textPanelAction == TextPanelAction.NONE) {
+			return;
+		}
 
-			// Re-layout view
-			validate();
+		if (model.textPanelAction == TextPanelAction.NEW_WORDS) {
+			// reset
+			model.textPanelAction = TextPanelAction.NONE;
 
-			// Set scroll bar unit increment
-			JScrollPane scrollPane = (JScrollPane) getParent().getParent();
-			if (labelSize != null) {
-				JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-				verticalScrollBar.setUnitIncrement(labelSize.height + VGAP); // 26
-			}
-		});
+			System.out.println(getClass().getSimpleName() + " - setup TextPanel with new words");
+			SwingUtilities.invokeLater(() -> {
+
+				// Calculate and add labels
+				Dimension labelSize = null;
+				BasicLabelUI basicLabelUI = new BasicLabelUI();
+				List<SpeedyWord> speedyWords = model.getSpeedyWords();
+				for (SpeedyWord speedyWord : speedyWords) {
+					SpeedyLabel speedyLabel = new SpeedyLabel(speedyWord.getIndex(), speedyWord.getWord());
+					labelSize = basicLabelUI.getPreferredSize(speedyLabel);
+					speedyLabel.setPreferredSize(new Dimension(labelSize.width + VGAP, labelSize.height));
+					speedyLabel.validate();
+					add(speedyLabel);
+					speedyLabels.add(speedyLabel);
+				}
+
+				// Re-layout view
+				validate();
+
+				// Set scroll bar unit increment
+				JScrollPane scrollPane = (JScrollPane) getParent().getParent();
+				if (labelSize != null) {
+					JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+					verticalScrollBar.setUnitIncrement(labelSize.height + VGAP); // 26
+				}
+			});
+		} else {
+			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action ["
+					+ model.textPanelAction.name() + "]");
+		}
 	}
 
 	/**
 	 * Need to override to make resizing of the scroll panel possible.<br>
 	 * The width is taken from parent - {@link #HGAP}.<br>
-	 * The height is taken by last component's location + it's height +
-	 * {@link #VGAP}.
+	 * The height is taken by last component's location + it's height + {@link #VGAP}.
 	 * 
 	 * @see javax.swing.JComponent#getPreferredSize()
 	 */
