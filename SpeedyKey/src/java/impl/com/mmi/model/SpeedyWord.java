@@ -14,11 +14,13 @@ public class SpeedyWord {
 	private String word;
 	int index;
 
+	/** User's input */
 	private String input = new String();
 
-	boolean complete = false;
+	private boolean complete = false;
 
-	public Color color = null;
+	/** The color to set the background to, or <code>null</code> if no coloring to be performed */
+	private Color color = null;
 
 	/**
 	 * Constructor
@@ -46,6 +48,11 @@ public class SpeedyWord {
 		return !input.isEmpty() && input.equals(word);
 	}
 
+	/**
+	 * Append given character to the {@link #input} {@link String}.
+	 * 
+	 * @param c
+	 */
 	public void appendInput(char c) {
 		input += Character.toString(c);
 		updateColor();
@@ -69,20 +76,31 @@ public class SpeedyWord {
 		return word;
 	}
 
-	public boolean isCompleted() {
+	public boolean isComplete() {
 		return this.complete;
 	}
 
-	private void updateColor() {
-		if (isTurnGreen()) {
-			color = Color.GREEN;
-		} else if (isTurnRed()) {
-			color = Color.RED;
+	public void setComplete(boolean complete) {
+		this.complete = complete;
+	}
+
+	public void updateColor() {
+		if (!this.complete) {
+			if (isTurnGreen()) {
+				color = Color.GREEN;
+			} else if (isTurnRed()) {
+				color = Color.RED;
+			} else {
+				color = null;
+			}
 		} else {
 			color = null;
 		}
 	}
 
+	/**
+	 * @return the current {@link #color} status
+	 */
 	public Color getColor() {
 		return this.color;
 	}

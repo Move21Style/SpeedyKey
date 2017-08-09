@@ -5,10 +5,10 @@ import java.awt.event.KeyEvent;
 import com.mmi.model.Model;
 import com.mmi.model.Model.InputFieldAction;
 import com.mmi.model.Model.Status;
-import com.mmi.model.Model.TextPanelAction;
 import com.mmi.model.SpeedyWord;
 
 public class InputHandler {
+	private final int[] SPECIAL_KEYS = new int[] { KeyEvent.VK_BACK_SPACE, KeyEvent.VK_SPACE };
 
 	/** The GUI model */
 	private Model model;
@@ -19,7 +19,8 @@ public class InputHandler {
 	/**
 	 * The Constructor
 	 * 
-	 * @param model - the GUI model
+	 * @param model
+	 *            - the GUI model
 	 */
 	public InputHandler(Model model) {
 		this.model = model;
@@ -28,7 +29,8 @@ public class InputHandler {
 	/**
 	 * Handles the key event.
 	 * 
-	 * @param event - the key event the user triggered by keyboard
+	 * @param event
+	 *            - the key event the user triggered by keyboard
 	 */
 	public void handle(KeyEvent event) {
 		char c = event.getKeyChar();
@@ -42,6 +44,8 @@ public class InputHandler {
 		startIfPossible(c);
 
 		if (model.status == Status.RUNNING) {
+			doSpecialKeyCheck(c);
+
 			// backspace ?
 			handleBackSpace(c);
 
@@ -54,22 +58,24 @@ public class InputHandler {
 				speedyWord.appendInput(c);
 			}
 		}
+	}
 
-		model.textPanelAction = TextPanelAction.UPDATE_COLOR;
-		model.inputFieldAction = InputFieldAction.UPDATE_COLOR;
+	private void doSpecialKeyCheck(char c) {
 		this.specialKeyEvent = false;
+		for (int i : SPECIAL_KEYS) {
+			this.specialKeyEvent |= i == c;
+		}
 	}
 
 	private void handleWhitespace(char c) {
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (c == KeyEvent.VK_SPACE) {
-			this.specialKeyEvent = true;
 			System.out.println("KeyEvent.VK_SPACE");
 			if (speedyWord.isTurnGreen()) {
+				speedyWord.setComplete(true);
 				model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
 			} else {
 				speedyWord.appendInput(c);
-				model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 			}
 		}
 	}
@@ -77,17 +83,15 @@ public class InputHandler {
 	private void handleBackSpace(char c) {
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (c == KeyEvent.VK_BACK_SPACE) {
-			this.specialKeyEvent = true;
 			System.out.println("KeyEvent.VK_BACK_SPACE");
 			speedyWord.removeLastChar();
-			model.textPanelAction = TextPanelAction.UPDATE_COLOR;
 		}
 	}
 
-	private void startIfPossible(char input) {
+	private void startIfPossible(char c) {
 		if (model.status != Status.RUNNING) {
 			SpeedyWord firstSpeedyWord = model.getSpeedyWords().get(0);
-			if (firstSpeedyWord.isStartingCharacter(input)) {
+			if (firstSpeedyWord.isStartingCharacter(c)) {
 				System.out.println("Detected start!");
 				model.status = Status.RUNNING;
 			} else {
@@ -98,9 +102,10 @@ public class InputHandler {
 
 	private SpeedyWord getCurrentSpeedyWord() {
 		for (SpeedyWord speedyWord : model.getSpeedyWords()) {
-			if (!speedyWord.isCompleted()) {
+			if (!speedyWord.isComplete()) {
 				return speedyWord;
 			}
+			speedyWord.updateColor();
 		}
 		return null;
 	}

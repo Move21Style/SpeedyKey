@@ -42,10 +42,6 @@ public class TextPanel extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		Model model = (Model) o;
 
-		if (model.textPanelAction == TextPanelAction.NONE) {
-			return;
-		}
-
 		if (model.textPanelAction == TextPanelAction.NEW_WORDS) {
 			// reset
 			model.textPanelAction = TextPanelAction.NONE;
@@ -76,14 +72,25 @@ public class TextPanel extends JPanel implements Observer {
 					verticalScrollBar.setUnitIncrement(labelSize.height + VGAP); // 26
 				}
 			});
-		} else if (model.textPanelAction == TextPanelAction.UPDATE_COLOR) {
-			for (SpeedyWord speedyWord : model.getSpeedyWords()) {
-				SwingUtilities.invokeLater(
-						() -> speedyLabels.get(speedyWord.getIndex()).setBackground(speedyWord.getColor()));
-			}
 		} else {
-			System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action ["
-					+ model.textPanelAction.name() + "]");
+			if (model.textPanelAction != TextPanelAction.NONE) {
+				System.out.println("WARNING: " + getClass().getSimpleName() + " - Unhandled action [" + model.textPanelAction.name() + "]");
+			}
+		}
+
+		updateBackgroundColors(model.getSpeedyWords());
+	}
+
+	/**
+	 * Update all label colors
+	 * 
+	 * @param speedyWords
+	 *            - the word information
+	 */
+	private void updateBackgroundColors(List<SpeedyWord> speedyWords) {
+		for (SpeedyWord speedyWord : speedyWords) {
+			Color speedyWordColor = speedyWord.getColor();
+			SwingUtilities.invokeLater(() -> speedyLabels.get(speedyWord.getIndex()).setBackground(speedyWordColor));
 		}
 	}
 

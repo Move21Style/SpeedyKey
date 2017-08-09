@@ -16,11 +16,11 @@ import com.mmi.util.FileUtil;
  */
 public class Model extends Observable {
 	public enum InputFieldAction {
-		NONE, CLEAR_INPUTFIELD, UPDATE_COLOR;
+		NONE, CLEAR_INPUTFIELD; // Color is updated by each event automatically
 	}
 
 	public enum TextPanelAction {
-		NONE, NEW_WORDS, UPDATE_COLOR;
+		NONE, NEW_WORDS; // Color is updated by each event automatically
 	}
 
 	public enum Status {
