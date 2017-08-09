@@ -1,0 +1,9 @@
+set nocompatible
+set nocp
+set backspace=indent,eol,start
+set term=xterm-256
+syntax on
+set hlsearch
+set t_Co=8
+set t_Sb=m
+set t_Sf=m
