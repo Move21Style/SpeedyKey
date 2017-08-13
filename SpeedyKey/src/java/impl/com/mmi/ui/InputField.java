@@ -47,6 +47,10 @@ public class InputField extends JTextField implements Observer {
 
 		// Update background
 		updateBackgroundColor(model.getSpeedyWords());
+
+		SwingUtilities.invokeLater(() -> {
+			requestFocusInWindow();
+		});
 	}
 
 	/**

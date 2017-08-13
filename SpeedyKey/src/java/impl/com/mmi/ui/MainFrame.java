@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void createRightPanel() {
-		RunningInfo runningInfo = new RunningInfo();
+		RunningInfo runningInfo = new RunningInfo(this.model);
 		getContentPane().add(runningInfo, BorderLayout.EAST);
 		connectModelToObserver(runningInfo);
 	}
@@ -80,7 +80,8 @@ public class MainFrame extends JFrame {
 	/**
 	 * Connect observing component to model
 	 * 
-	 * @param observer - the observer
+	 * @param observer
+	 *            - the observer
 	 */
 	private void connectModelToObserver(Observer observer) {
 		model.addObserver(observer);

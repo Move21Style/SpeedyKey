@@ -1,6 +1,8 @@
 package com.mmi.handler;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import com.mmi.model.Model;
 import com.mmi.model.Model.InputFieldAction;
@@ -37,7 +39,7 @@ public class InputHandler {
 
 		SpeedyWord speedyWord = getCurrentSpeedyWord();
 		if (speedyWord == null) {
-			// Ende
+			model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
 			return;
 		}
 
@@ -54,10 +56,49 @@ public class InputHandler {
 
 			// all normal typing cases -> Appending
 			if (!specialKeyEvent) {
-				// TODO mmi:
 				speedyWord.appendInput(c);
+
+				// Check if this was the last missing char to complete all words.
+				if (isDetectEnd()) {
+					for (SpeedyWord w : model.getSpeedyWords()) {
+						w.setColor(Color.GREEN);
+					}
+				}
 			}
 		}
+	}
+
+	/**
+	 * 
+	 */
+	private boolean isDetectEnd() {
+		List<SpeedyWord> speedyWords = model.getSpeedyWords();
+		////		boolean preLastComplete = false;
+		//
+		//		boolean skipPreLast = speedyWords.size() <= 1;
+		//		if (!skipPreLast) {
+		// Check preLast word
+		//			SpeedyWord preLast = speedyWords.get(speedyWords.size() - 2);
+		//			preLastComplete = preLast.isComplete();
+		//		} else {
+		// There is just one word. Means we assume simply that preLast word is complete
+		//			preLastComplete = true;
+		//		}
+
+		// Continue with last word only if preLast is complete.
+		//		if (preLastComplete) {
+		SpeedyWord last = speedyWords.get(speedyWords.size() - 1);
+		if (last.isTurnGreen()) {
+			System.out.println("Detected end!");
+			last.setComplete(true);
+			model.status = Status.FINISHED;
+			model.inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
+			return true;
+		}
+		//		}
+
+		// t least one uncomplete word outstanding
+		return false;
 	}
 
 	private void doSpecialKeyCheck(char c) {
@@ -89,7 +130,7 @@ public class InputHandler {
 	}
 
 	private void startIfPossible(char c) {
-		if (model.status != Status.RUNNING) {
+		if (model.status == Status.NONE) {
 			SpeedyWord firstSpeedyWord = model.getSpeedyWords().get(0);
 			if (firstSpeedyWord.isStartingCharacter(c)) {
 				System.out.println("Detected start!");
@@ -105,7 +146,10 @@ public class InputHandler {
 			if (!speedyWord.isComplete()) {
 				return speedyWord;
 			}
-			speedyWord.updateColor();
+			// After all words were completed, don't change any color
+			if (model.status != Status.FINISHED) {
+				speedyWord.updateColor();
+			}
 		}
 		return null;
 	}

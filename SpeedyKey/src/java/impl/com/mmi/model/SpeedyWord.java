@@ -69,9 +69,6 @@ public class SpeedyWord {
 		return this.index;
 	}
 
-	/**
-	 * @return the word
-	 */
 	public String getWord() {
 		return word;
 	}
@@ -99,6 +96,14 @@ public class SpeedyWord {
 	}
 
 	/**
+	 * @param color
+	 *            the color to set
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	/**
 	 * @return the current {@link #color} status
 	 */
 	public Color getColor() {
@@ -108,6 +113,15 @@ public class SpeedyWord {
 	public void removeLastChar() {
 		int endIndex = input.length() == 0 ? 0 : input.length() - 1;
 		input = input.substring(0, endIndex);
+		updateColor();
+	}
+
+	/**
+	 * Reset the status of the word as before the run was started.
+	 */
+	public void reset() {
+		this.input = new String();
+		setComplete(false);
 		updateColor();
 	}
 }

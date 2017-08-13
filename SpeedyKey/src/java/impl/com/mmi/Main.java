@@ -35,13 +35,13 @@ public class Main {
 	 */
 	private static void registerKeyListener(MainFrame mainFrame, Model model) {
 		// // Focus input field
-		// SwingUtilities.invokeLater(() -> {
-		// mainFrame.addWindowFocusListener(new WindowAdapter() {
-		// public void windowGainedFocus(WindowEvent e) {
-		// mainFrame.getInputField().requestFocusInWindow();
-		// }
-		// });
-		// });
+		//		SwingUtilities.invokeLater(() -> {
+		//			mainFrame.addWindowFocusListener(new WindowAdapter() {
+		//				public void windowGainedFocus(WindowEvent e) {
+		//					mainFrame.getInputField().requestFocusInWindow();
+		//				}
+		//			});
+		//		});
 
 		mainFrame.getInputField().addKeyListener(new SpeedyKeyListener(model));
 	}

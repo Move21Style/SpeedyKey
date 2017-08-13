@@ -94,4 +94,16 @@ public class Model extends Observable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	/**
+	 * Reset words and model.
+	 */
+	public void reset() {
+		for (SpeedyWord w : getSpeedyWords()) {
+			w.reset();
+		}
+		inputFieldAction = InputFieldAction.CLEAR_INPUTFIELD;
+		status = Status.NONE;
+		changeAndNotify();
+	}
 }
