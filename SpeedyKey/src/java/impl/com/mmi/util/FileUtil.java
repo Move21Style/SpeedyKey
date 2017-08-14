@@ -33,7 +33,8 @@ public class FileUtil {
 	/**
 	 * Read each word from given file and put these into a String[].
 	 * 
-	 * @param title - the fileName
+	 * @param title
+	 *            - the fileName
 	 * @return the words in a String[]
 	 */
 	public static List<String> readWords(String title) {
@@ -65,6 +66,6 @@ public class FileUtil {
 			}
 		}
 
-		return words;
+		return UnicodeUtil.convert(words);
 	}
 }

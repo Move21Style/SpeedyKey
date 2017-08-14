@@ -35,7 +35,7 @@ public class TextPanel extends JPanel implements Observer {
 
 	public TextPanel() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, HGAP, VGAP)); // align, hgap, vgap
-		setBorder(BorderFactory.createLineBorder(Color.RED));
+		setBorder(BorderFactory.createEmptyBorder());
 	}
 
 	@Override

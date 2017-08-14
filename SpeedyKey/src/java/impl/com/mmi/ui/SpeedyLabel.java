@@ -4,7 +4,6 @@
  */
 package com.mmi.ui;
 
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -38,7 +37,8 @@ public class SpeedyLabel extends JLabel {
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setFont(new Font("Arial", Font.PLAIN, 20));
 
-		setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		// setBorder(BorderFactory.createLineBorder(Color.BLUE));
+		setBorder(BorderFactory.createEmptyBorder());
 	}
 
 	/**
